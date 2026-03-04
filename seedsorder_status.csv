@@ -1,0 +1,5 @@
+status_code,status_label,is_active,sort_order
+pending,Aguardando,true,1
+completed,Concluído,true,2
+cancelled,Cancelado,false,3
+refunded,Reembolsado,false,4

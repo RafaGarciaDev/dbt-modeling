@@ -1,0 +1,54 @@
+version: 2
+
+sources:
+  - name: raw_data
+    description: "Dados brutos da camada de ingestão"
+    tables:
+      - name: orders
+        description: "Tabela de pedidos brutos"
+        columns:
+          - name: order_id
+            description: "ID único do pedido"
+            tests:
+              - unique
+              - not_null
+          - name: customer_id
+            description: "ID do cliente"
+            tests:
+              - not_null
+          - name: order_date
+            description: "Data do pedido"
+            tests:
+              - not_null
+          - name: total_amount
+            description: "Valor total do pedido"
+            tests:
+              - not_null
+          - name: status
+            description: "Status do pedido"
+            tests:
+              - accepted_values:
+                  values: ['pending', 'completed', 'cancelled', 'refunded']
+
+models:
+  - name: stg_orders
+    description: "Staging de pedidos com limpeza e tipagem"
+    columns:
+      - name: order_id
+        description: "ID único do pedido"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
+      - name: order_date_clean
+        tests:
+          - not_null
+      - name: status
+        tests:
+          - accepted_values:
+              values: ['pending', 'completed', 'cancelled', 'refunded']

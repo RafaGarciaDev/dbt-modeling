@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: "Dimensão de clientes com métricas agregadas"
+    columns:
+      - name: customer_pk
+        description: "Chave surrogate do cliente"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "ID natural do cliente"
+        tests:
+          - unique
+          - not_null
+      - name: lifetime_value
+        description: "Valor total gasto pelo cliente"
+        tests:
+          - not_null
+      - name: customer_segment
+        tests:
+          - accepted_values:
+              values: ['VIP', 'Regular', 'New']
+
+  - name: fct_orders
+    description: "Fato de pedidos enriquecido com dados do cliente"
+    columns:
+      - name: order_id
+        description: "ID único do pedido"
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
+      - name: order_number
+        description: "Número sequencial do pedido por cliente"
+        tests:
+          - not_null
